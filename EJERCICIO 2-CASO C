@@ -1,0 +1,127 @@
+#include<iostream>
+#include<stdlib.h>
+#include<time.h>
+using namespace std;
+struct Datos{
+	int Fallecidos;
+	int Observadas;
+	int Infectadas;
+	int Recuperadas;
+}Personas[30];
+//variable universal
+int sumaf = 0, sumao = 0, sumai = 0, sumar = 0;
+void genera_y_arreglo(int n) {
+	srand(time(NULL));
+	//Generar
+	for (int i=0; i < n; i++) {
+		Personas[i].Fallecidos = 2 + rand() % (9 - 2);
+		Personas[i].Observadas = 100 + rand() % (201 - 100);
+		Personas[i].Infectadas = 100 + rand() % (151 - 100);
+		Personas[i].Recuperadas = 20 + rand() % (51 - 20);
+	}
+//Imprimir
+	cout << "Fallecidos: \t";
+	for (int i=0; i < n; i++) {
+		cout << Personas[i].Fallecidos<<"\t";
+	}
+	cout << "\nObservadas:\t ";
+	for (int i = 0; i < n; i++) {
+		cout << Personas[i].Observadas << "\t";
+	}
+	cout << "\nInfectadas:\t ";
+	for (int i = 0; i < n; i++) {
+		cout << Personas[i].Infectadas << "\t";
+	}
+	cout << "\nRecuperadas:\t ";
+	for (int i = 0; i < n; i++) {
+		cout << Personas[i].Recuperadas << "\t";
+	}
+}
+void calcula_maximo_y_minimo(int n) {
+	int min=999; int max=1;
+	for (int i = 0; i < n; i++) {
+	 if(Personas[i].Observadas>max){
+		 max = Personas[i].Observadas;
+	 }
+	 if (Personas[i].Observadas<min) {
+		 min = Personas[i].Observadas;
+	 }
+	}
+}
+void cantidad_por_caso(int n) {
+	for (int i = 0; i < n; i++) {
+		sumaf += Personas[i].Fallecidos;
+		sumao += Personas[i].Observadas;
+		sumai += Personas[i].Infectadas;
+		sumar += Personas[i].Recuperadas;
+}
+	cout << endl << "Personas fallecidas: " << sumaf;
+	cout << endl << "Personas observadas: " << sumao;
+	cout << endl << "Personas infectadas: " << sumai;
+	cout << endl << "Personas recuperadas: " << sumar;
+}
+void promedio_por_caso(int n,int suma1,int suma2,int suma3,int suma4) {
+	cout << endl << "Personas fallecidas: " << suma1/n ;
+	cout << endl << "Personas observadas: " << suma2/n ;
+	cout << endl << "Personas infectadas: " << suma3/n ;
+	cout << endl << "Personas recuperadas: " << suma4/n;
+}
+void ordenar_y_mostrar(int n) 
+{
+	int aux1, aux2, aux3, aux4;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (Personas[i].Fallecidos <= Personas[i + 1].Fallecidos) {
+				aux1 = Personas[i].Fallecidos;
+				Personas[i].Fallecidos = Personas[i + 1].Fallecidos;
+				Personas[i + 1].Fallecidos = aux1;
+			}
+			if (Personas[i].Observadas <= Personas[i + 1].Observadas) {
+				aux2 = Personas[i].Observadas;
+				Personas[i].Observadas = Personas[i + 1].Observadas;
+				Personas[i + 1].Observadas = aux2;
+			}
+			if (Personas[i].Infectadas <= Personas[i + 1].Infectadas) {
+				aux1 = Personas[i].Infectadas;
+				Personas[i].Infectadas = Personas[i + 1].Infectadas;
+				Personas[i + 1].Infectadas = aux1;
+			}
+			if (Personas[i].Recuperadas <= Personas[i + 1].Recuperadas) {
+				aux1 = Personas[i].Recuperadas;
+				Personas[i].Recuperadas = Personas[i + 1].Recuperadas;
+				Personas[i + 1].Recuperadas = aux1;
+			}
+		}
+	}
+		cout << "\nFallecidos:\t ";
+		for (int i = 0; i < n; i++) {
+			cout << Personas[i].Fallecidos << "\t";
+		}
+		cout << "\nObservadas:\t ";
+		for (int i = 0; i < n; i++) {
+			cout << Personas[i].Observadas << "\t";
+		}
+		cout << "\nInfectadas:\t ";
+		for (int i = 0; i < n; i++) {
+			cout << Personas[i].Infectadas << "\t";
+		}
+		cout << "\nRecuperadas:\t ";
+		for (int i = 0; i < n; i++) {
+			cout << Personas[i].Recuperadas << "\t";
+		}
+
+
+}
+int main() {
+	int N;
+	do {
+		cout << "Ingrese el valor de N: "; cin >> N;
+	} while (N>=30);
+	genera_y_arreglo(N);
+	calcula_maximo_y_minimo(N);
+	cantidad_por_caso(N);
+	promedio_por_caso(N, sumaf, sumao, sumai, sumar);
+	ordenar_y_mostrar(N);
+
+	return 0;
+}
